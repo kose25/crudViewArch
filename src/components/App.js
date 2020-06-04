@@ -3,13 +3,15 @@ import axios from "axios";
 import MyForm from "./MyForm";
 import CustomerList from "./customerList";
 import Loader from "./Loader";
+import Carousel from "./Carousel";
+import Footer from "./Footer";
 import "./app.css"
 
 class App extends Component {
     state = {
         customers: [],
         customer: {},
-        loader:false,
+        loader: false,
         url: "http://localhost/primerLaravel/public/api/customers"
     };
 
@@ -20,14 +22,14 @@ class App extends Component {
     }
 
     deleteCustomer = async id => {
-        this.setState({ loader: true});
+        this.setState({ loader: true });
         await axios.delete(`${this.state.url}/${id}`);
 
         this.getCustomers();
     }
 
     createCustomer = async data => {
-        this.setState({ loader: true});
+        this.setState({ loader: true });
 
         await axios.post(this.state.url, {
             first_name: data.first_name,
@@ -61,13 +63,13 @@ class App extends Component {
 
     onEdit = (data) => {
         //console.log("app", data);
-        this.setState({ customer: data});
+        this.setState({ customer: data });
     };
 
     onFormSubmit = data => {
-        if(data.isEdit) {
+        if (data.isEdit) {
             this.editCustomer(data);
-        } 
+        }
         else {
             this.createCustomer(data);
         }
@@ -84,16 +86,19 @@ class App extends Component {
                         </a>
                     </div>
                 </div>
+                <Carousel />
 
                 <div className="ui main container">
                     <MyForm customer={this.state.customer} onFormSubmit={this.onFormSubmit} />
-                    {this.state.loader ? <Loader /> : ""}
-                    <CustomerList customers={this.state.customers} 
-                    onDelete={this.onDelete} 
-                    onEdit={this.onEdit} />
-                </div>
 
+                    <CustomerList customers={this.state.customers}
+                        onDelete={this.onDelete}
+                        onEdit={this.onEdit} />
+                    {this.state.loader ? <Loader /> : ""}
+                </div>
+                <Footer />
             </div>
+
         );
     }
 }

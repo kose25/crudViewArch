@@ -82,7 +82,7 @@ class MyForm extends Component {
 
     render() {
         return(
-            <form className="ui form">
+            <form className="ui form animated fadeInUp delay-1s">
                 <div className="fields">
                     <div className="four wide field">
                         <label>First Name</label>
